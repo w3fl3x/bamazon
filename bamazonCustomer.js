@@ -83,5 +83,12 @@ var promptCustomer = function(res) {
                 })
             }
         }
+        // if input does not match item in table
+        if (i == res.length && correct == false) {
+            console.log('\n' + '---------------------------------------' + '\n');
+            console.log('Invalid choice!' + '\n');
+            console.log('---------------------------------------' + '\n');
+            promptCustomer(res);
+        }
     })
 }
