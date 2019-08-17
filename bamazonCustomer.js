@@ -29,6 +29,59 @@ var start = function() {
     })
 }
 
-inquirer.prompt([
-
-])
+var promptCustomer = function(res) {
+    // take user input for first question
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'choice',
+            message: 'What product would you like to buy? [Press C to Cancel]',
+        }
+    ]).then(function(answer) {
+        var correct = false;
+        // if user wants to cancel then can press 'C'
+        if (answer.choice.toUpperCase() === 'C') {
+            process.exit();
+        }
+        // if input matches item 
+        for (var i = 0; i < res.lenght; i++) {
+            if (res[i].product_name === answer.choice) {
+                correct = true;
+                var product = answer.choice;
+                var id = i;
+                inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'quantity',
+                        message: 'How many would you like to buy?',
+                        validate: function(value) {
+                            if (isNaN(value) === false) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                        // if stock_quantity is not less than zero then minus amount ordered from total
+                    }
+                ]).then(function(answer) {
+                    if ((res[id].stock_quantity - answer.quantity) > 0) {
+                        connection.query("UPDATE products SET stock_quantity='" + (res[id].stock_quantity - answer.quantity) + "'WHERE product_name='" + product + "'", function(err, res2) {
+                            createTable();
+                            var totalCost = answer.quantity * res[id].price;
+                            console.log('\n' + '---------------------------------------' + '\n');
+                            console.log('\n' + 'You bought a product' + '\n');
+                            console.log('Total cost: $ ' + totalCost + '\n');
+                            console.log('---------------------------------------' + '\n');
+                        })
+                        // if zero quantity, let user know
+                    } else {
+                        console.log('\n' + '---------------------------------------' + '\n')
+                        console.log('Item is sold out!' + '\n');
+                        console.log('---------------------------------------' + '\n')
+                        promptCustomer(res);
+                    }
+                })
+            }
+        }
+    })
+}
