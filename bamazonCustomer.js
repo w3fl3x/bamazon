@@ -22,8 +22,9 @@ var start = function() {
     // display table for user to see items
     connection.query('Select * from products', function(err, res) {
         for (var i = 0; i < res.length; i++) {
-            console.table(res[i].item_id + res[i].product_name + res[i].department_name + res[i].price + res[i].stock_quantity + '\n');
+            console.log(res[i].item_id + '|--|' + res[i].product_name + '|--|' + res[i].department_name + '|--|' + res[i].price + '|--|' + res[i].stock_quantity + '\n');
         }
+        console.table(res);
         // once displayed, prompt user if they want to buy a product
         promptCustomer(res);
     })
@@ -44,7 +45,7 @@ var promptCustomer = function(res) {
             process.exit();
         }
         // if input matches item 
-        for (var i = 0; i < res.lenght; i++) {
+        for (var i = 0; i < res.length; i++) {
             if (res[i].product_name === answer.choice) {
                 correct = true;
                 var product = answer.choice;
@@ -66,7 +67,7 @@ var promptCustomer = function(res) {
                 ]).then(function(answer) {
                     if ((res[id].stock_quantity - answer.quantity) > 0) {
                         connection.query("UPDATE products SET stock_quantity='" + (res[id].stock_quantity - answer.quantity) + "'WHERE product_name='" + product + "'", function(err, res2) {
-                            createTable();
+                            start();
                             var totalCost = answer.quantity * res[id].price;
                             console.log('\n' + '---------------------------------------' + '\n');
                             console.log('\n' + 'You bought a product' + '\n');
@@ -84,7 +85,7 @@ var promptCustomer = function(res) {
             }
         }
         // if input does not match item in table
-        if (i == res.length && correct == false) {
+        if (i === res.length && correct === false) {
             console.log('\n' + '---------------------------------------' + '\n');
             console.log('Invalid choice!' + '\n');
             console.log('---------------------------------------' + '\n');

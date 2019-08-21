@@ -25,3 +25,5 @@ VALUES
     ('Bluetooth Headphones', 'Electronics', 120, 43),
     ('Lego', 'Toys', 40, 77),
     ('Paper', 'Office',  8.50, 55);
+
+    SELECT*FROM products;
