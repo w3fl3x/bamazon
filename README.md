@@ -18,11 +18,17 @@ var connection = mysql.createConnection({
   user: 'nodeuser',
   password: 'root',
   database: 'bamazon_db'
- });
- ```
+});
+```
  
- ## Examples
+## Examples
  
- ### Customer Module - run 'node bamazonCustomer.js' in CL
+### Customer Module - run 'node bamazonCustomer.js' in CL
  
- **Specify product
+**Specify product to buy from product_name column.**
+![Product List Screen Grab](/images/1.png/)
+
+**Specify amount to order.**
+![Product Selection and Quantity Screen Grab](/images/2.png/)
+
+**
