@@ -31,4 +31,9 @@ var connection = mysql.createConnection({
 **Specify amount to order.**
 ![Product Selection and Quantity Screen Grab](/images/2.png/)
 
-**
+**Order confirmation with total cost, continue to shop or end session by typing 'c'.**
+**Database update with new stock quantity.**
+![Order Confirm Screen Grab](/images/3.png/)
+
+**If ordering more than what is in stock. User will receive message that item is sold out and order will not be completed.**
+![Sold Out Screen Grab](/images/5.png/)
